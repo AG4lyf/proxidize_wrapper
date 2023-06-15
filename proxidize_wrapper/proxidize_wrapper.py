@@ -1,6 +1,7 @@
 """Main module."""
 
 from requests import get
+import time
 
 class Proxy:
     def __init__(self, arg) -> None:
@@ -22,7 +23,19 @@ class Proxy:
             raise e
         if "success" not in x.text.lower():
             raise ValueError("Invalid credentials")
-        return self.get_ip()
-    
+        
+        tries = 10
+        d = ""
+        while True:
+            try:
+                d = self.get_ip()
+            except Exception as e:
+                tries -= 1
+                time.sleep(3)
+                if tries == 0:
+                    raise e
+            else:
+                return d
+            
     def get_ip(self):
-        return get("https://api.ipify.org/").text
+        return get("https://api.ipify.org/", timeout=1).text
