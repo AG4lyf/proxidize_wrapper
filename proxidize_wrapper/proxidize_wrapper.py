@@ -1,8 +1,8 @@
 """Main module."""
 
-from requests import get
 import time
-from requests.auth import HTTPProxyAuth
+from urllib3 import ProxyManager, make_headers
+import urllib3
 
 
 class Proxy:
@@ -21,8 +21,9 @@ class Proxy:
         return f"http://{self.ip}:{self.change_port}/change_ip?t={self.username}{self.password}"
 
     def change_ip(self, delay=25):
-        x = get(self.get_change_url())
-        if "success" not in x.text.lower():
+        http = urllib3.PoolManager()
+        x = http.request('GET', self.get_change_url())
+        if "success" not in x.data.decode('utf-8').lower():
             raise ValueError("Invalid Credentials")
         time.sleep(delay)
         return self.get_ip() 
@@ -37,16 +38,14 @@ class Proxy:
         return self.get_http_proxy()
     
     def get_ip(self):
-        proxies = {"http":f"http://{self.ip}:{self.http_port}"}
-        auth = HTTPProxyAuth(self.username, self.password)
-        print(proxies, auth)
-        r = get('https://api.ipify.org/', proxies=proxies, auth=auth) 
-        proxy_ip = r.text
-        return proxy_ip 
+        proxy = urllib3.ProxyManager(f"http://{self.ip}:{self.http_port}", proxy_headers=make_headers(proxy_basic_auth=f'{self.username}:{self.password}'))
+        r = proxy.request('GET', 'https://api.ipify.org/')
+        proxy_ip = r.data.decode('utf-8')
+        self.proxy_ip = proxy_ip
+        return self.proxy_ip
         
-
 if __name__ == "__main__":
     p = Proxy(input(), input())
     print(p.proxy_ip)
-    print(p.change_ip())
+    print(p.change_ip(30))
     print(p.proxy_ip)
