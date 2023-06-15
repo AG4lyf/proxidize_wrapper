@@ -15,7 +15,7 @@ class Proxy:
     
     def change_ip(self):
         try:
-            x = get(f"http://{self.ip}/{self.port}/change_ip?t={self.username}{self.password}")
+            x = get(f"http://{self.ip}:{self.port}/change_ip?t={self.username}{self.password}")
         except Exception as e:
             raise e
         if "success" not in x.text.lower():
