@@ -22,6 +22,7 @@ class Proxy:
         except Exception as e:
             raise e
         if "success" not in x.text.lower():
+            print(x.text)
             raise ValueError("Invalid credentials")
         
         tries = 10
