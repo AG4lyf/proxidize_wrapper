@@ -14,8 +14,9 @@ Wrapper for proxidize android app.
 Install a Proxy Server
 ======================
 Read
-`Follow <https://github.com/proxidize/proxidize-android>`__
+`This <https://github.com/proxidize/proxidize-android>`__
 to host the server.
+
 We would need the http address which is in the format of "IP:PORT:USERNAME:PASSWORD" to use this wrapper.
 
 Features
@@ -34,8 +35,11 @@ How to Use
 
       from proxidize_wrapper import Proxy
 
-      p = Proxy("IP:PORT:USERNAME:PASSWORD")
-      print(p.get_ip())
-      p.change_ip()
-      print(p.get_ip())
+      p = Proxy("IP:PORT:USERNAME:PASSWORD") #Initialize the class object
+
+      print(p.get_ip()) # Print the current ip address.
+
+      p.change_ip() # change the ip address.
+      
+      print(p.get_ip()) # Print the current ip address.
 
