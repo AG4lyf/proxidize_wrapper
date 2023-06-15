@@ -35,11 +35,11 @@ How to Use
 
       from proxidize_wrapper import Proxy
 
-      p = Proxy("IP:PORT:USERNAME:PASSWORD") #Initialize the class object
+      p = Proxy("IP:PORT:USERNAME:PASSWORD") #Initialize the class object.
 
       print(p.get_ip()) # Print the current ip address.
 
       p.change_ip() # change the ip address.
-      
+
       print(p.get_ip()) # Print the current ip address.
 
