@@ -35,7 +35,7 @@ How to Use
 
       from proxidize_wrapper import Proxy
 
-      p = Proxy("IP:PORT:USERNAME:PASSWORD") #Initialize the class object.
+      p = Proxy("127.0.0.1:34517:USERNAME:PASSWORD", "23412") #Initialize the class object.
 
       print(p.get_ip()) # Print the current ip address.
 
